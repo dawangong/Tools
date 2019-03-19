@@ -1,0 +1,20 @@
+{
+  "name": "highly-tools",
+  "version": "1.0.0",
+  "description": "工具箱,对常用功能的封装实现",
+  "main": "Tools.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dawangong/Tools.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dawangong/Tools/issues"
+  },
+  "homepage": "https://github.com/dawangong/Tools#readme"
+}
