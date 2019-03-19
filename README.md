@@ -1,12 +1,19 @@
 # Tools
-个人工具箱,对常用功能的封装实现
+工具箱,对常用功能的封装实现
 
 > DOC
+
+## How to use ?
+
+```npm
+npm install highly-tools
+```
 
 ### queue
 > 串行、并行、全部完成
 ```javascript
-// 需要对异步函数做一些修改(包一层即可) 如下（略显鸡肋 曾尝试过装饰器模式自行内部封装fail...）
+// 需要对异步函数做一些修改(包一层即可) 如下:
+//（略显鸡肋 曾尝试过装饰器模式自行内部封装fail...）
 import Tools from 'Tools';
 
 const fn1 = (cb) => {
