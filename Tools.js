@@ -95,6 +95,40 @@ const Tools = {
             return index < arr.length ? {value: arr[index++], done: false} : {value: undefined, done: true};
         }
       }
+    },
+
+    //函数节流
+    throttle: (fn, delay = 300, limit = 1000) => {
+        let timer = null;
+        let previous = null;
+
+        return () => {
+            let now = +new Date();
+
+            !previous && (previous = now);
+
+            if ( now - previous > limit ) {
+                fn.bind(this)();
+                // 重置上一次开始时间为本次结束时间
+                previous = now;
+            } else {
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                    fn.bind(this)();
+                }, delay);
+            }
+        }
+    },
+
+    //函数防抖
+    debounce: (fn, delay = 300) => {
+        let timer = null;
+        return () => {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                fn.bind(this)();
+            }, delay);
+        };
     }
 };
 

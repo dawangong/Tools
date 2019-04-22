@@ -91,3 +91,32 @@ import Tools from 'Tools';
 
 Tools.iterator([1, 2, 3]);
 ```
+
+### throttle
+> 函数节流，控制执行频率
+```javascript
+import Tools from 'Tools';
+
+/**
+* fn    回调函数
+* delay 延迟
+* limit 必执行延迟
+*/
+Tools.throttle(() => {
+    // your fn
+}, 300, 600);
+```
+
+### debounce
+> 函数防抖，频繁触发只触发一次
+```javascript
+import Tools from 'Tools';
+
+/**
+* fn    回调函数
+* delay 延迟
+*/
+Tools.debounce(() => {
+    // your fn
+}, 300);
+```
