@@ -149,4 +149,4 @@ const Tools = {
     }
 };
 
-export default Tools;
+module.exports = Tools;
