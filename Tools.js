@@ -99,47 +99,65 @@ const Tools = {
         }
     },
 
-    //函数节流
+    /**
+     * 函数节流
+     * @param fn        频繁触发的函数   type Function
+     * @param delay     延迟            type Number
+     * @param limit     必触发时间限制   type Number
+     */
     throttle: (fn, delay = 300, limit = 1000) => {
         let timer = null;
         let previous = null;
+        let result;
 
         return () => {
+            // 记录当前时刻
             let now = +new Date();
-
+            // 记录上次开始时间
             !previous && (previous = now);
-
+            // 达到限制时间手动触发一次函数执行
             if (now - previous > limit) {
-                fn.apply(this, arguments);
+                // 绑定this和event对像
+                result = fn.apply(this, arguments);
                 // 重置上一次开始时间为本次结束时间
                 previous = now;
             } else {
+                // 限制在规定时间内重复触发无效
                 clearTimeout(timer);
                 timer = setTimeout(() => {
                     fn.apply(this, arguments)
                 }, delay);
             }
+            return result;
         }
     },
 
-    //函数防抖
+    /**
+     * 函数防抖
+     * @param   fn        频繁触发的函数   type Function
+     * @param   delay     延迟           type Number
+     * @param   immediate 是否立即触发一次 type Boolean
+     */
     debounce: (fn, delay = 300, immediate = false) => {
         let timer = null;
         let now = true;
         let result;
         return () => {
             clearTimeout(timer);
+            // 如果设置立即触发则立即触发
             if (immediate) {
+                // 如果是第一次 则立即触发
                 if (now) {
                     result = fn.apply(this, arguments);
                     now = false;
                 } else {
                     timer = setTimeout(() => {
+                        // 绑定this和event对象
                         fn.apply(this, arguments)
                     }, delay);
                 }
-            }
-            else {
+            } else {
+                // 如果没设置立即触发则按延时触发
                 timer = setTimeout(() => {
                     fn.apply(this, arguments)
                 }, delay);

@@ -113,8 +113,9 @@ Tools.throttle(() => {
 import Tools from 'Tools';
 
 /**
-* fn    回调函数
-* delay 延迟
+* fn        回调函数
+* delay     延迟
+* immediate 是否立刻触发
 */
 Tools.debounce(() => {
     // your fn
