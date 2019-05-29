@@ -78,7 +78,10 @@ const Tools = {
 
     // 数组扁平化
     flatten(arr) {
-        return String(arr).split(',').map(item => Number(item))
+        while (arr.some(item => Array.isArray(item))) {
+            arr = [].concat(...arr);
+        }
+        return arr;
     },
 
     // 一维数组转二维数组
