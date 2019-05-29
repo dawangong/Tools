@@ -72,10 +72,8 @@ const Tools = {
         if (!tree || !tree.children) {
             return false
         }
-        action(tree);
-        tree.children.forEach(function (item) {
-            tree(item, action);
-        });
+        action(tree.value);
+        tree.children.forEach(item => this.mapTree(item, action));
     },
 
     // 数组扁平化
@@ -95,9 +93,7 @@ const Tools = {
     iterator(arr) {
         let index = 0;
         return {
-            next: function () {
-                return index < arr.length ? {value: arr[index++], done: false} : {value: undefined, done: true};
-            }
+            next: () => index < arr.length ? {value: arr[index++], done: false} : {value: undefined, done: true}
         }
     },
 
@@ -246,7 +242,7 @@ const Tools = {
             _obj = this.fixReference(obj);
         }
         const cloneBase = (_obj) => {
-            if (typeof _obj !== 'object') return;
+            if (obj === null || typeof obj !== 'object') return obj;
             let newObj = _obj instanceof Array ? [] : {};
             for (let key in _obj) {
                 if (_obj.hasOwnProperty(key)) {
