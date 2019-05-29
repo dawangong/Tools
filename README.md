@@ -98,10 +98,11 @@ Tools.iterator([1, 2, 3]);
 import Tools from 'Tools';
 
 /**
-* fn    回调函数
-* delay 延迟
-* limit 必执行延迟
-*/
+ * 函数节流
+ * @param fn        频繁触发的函数   type Function
+ * @param delay     延迟            type Number
+ * @param limit     必触发时间限制   type Number
+ */
 Tools.throttle(() => {
     // your fn
 }, 300, 600);
@@ -113,11 +114,28 @@ Tools.throttle(() => {
 import Tools from 'Tools';
 
 /**
-* fn        回调函数
-* delay     延迟
-* immediate 是否立刻触发
-*/
+ * 函数防抖
+ * @param   fn        频繁触发的函数   type Function
+ * @param   delay     延迟           type Number
+ * @param   immediate 是否立即触发一次 type Boolean
+ */
 Tools.debounce(() => {
     // your fn
 }, 300);
+
+```
+
+### fixReference
+> 循环引用解除
+```javascript
+import Tools from 'Tools';
+
+/**
+ * 解除循环引用
+ * @param object    循环引用对象
+ * @param replacer  重构对象的回调函数
+ * @returns {{_$}}  解除循环引用的占位对象
+ */
+Tools.fixReference({key: 'your object'}, callback);
+
 ```

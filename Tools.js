@@ -164,6 +164,71 @@ const Tools = {
             }
             return result
         };
+    },
+    /**
+     * 解除循环引用
+     * @param object    循环引用对象
+     * @param replacer  重构对象的回调函数
+     * @returns {{_$}}  解除循环引用的占位对象
+     */
+    fixReference: (object, replacer) => {
+        // 使用闭包和WeakMap对象的set、get嗅探重复的对象
+        const objects = new WeakMap();
+        // 传入需解除引用的对象和默认的终止引用占位
+        const terminate = (value, path) => {
+
+            // 识别并终止引用和重构重复对象
+            let old_path;
+            // 新子对象
+            let _obj;
+
+            // 回调函数,修改传入对象
+            if (replacer !== undefined) {
+                value = replacer(value);
+            }
+
+            // 排除基本类型、null、reg对象、date对象,反之直接return自身
+            if (
+                typeof value === 'object'
+                && value !== null
+                && !(value instanceof Boolean)
+                && !(value instanceof Date)
+                && !(value instanceof Number)
+                && !(value instanceof RegExp)
+                && !(value instanceof String)
+            ) {
+
+                // 尝试根据当前对象获取key对应的value
+                old_path = objects.get(value);
+                if (old_path !== undefined) {
+                    // 如果重复则返回重构的对象（old_path为重复对象WeakMap中存储的value）
+                    return {_$: old_path};
+                }
+
+                // 无重复则用当前对象设置key和对应的value
+                objects.set(value, path);
+
+                // 根据数组或对象不断递归每一个key,消除引用返回key对应的value或者_obj
+                if (Array.isArray(value)) {
+                    _obj = [];
+                    // 键值和默认path拼接新的path
+                    value.forEach((item, index) => _obj[index] = terminate(item, `${path}[${index}]`));
+                } else {
+                    _obj = {};
+                    Object.keys(value).forEach(key =>  _obj[key] = terminate(
+                        value[key],
+                        // 键值和默认path拼接新的path
+                        `${path}[${JSON.stringify(key)}]`
+                    ));
+                }
+                // return 重组后的子对象
+                return _obj;
+            }
+            // return 自身
+            return value;
+        };
+
+        return terminate(object, 'stop')
     }
 };
 
