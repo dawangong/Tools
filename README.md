@@ -99,7 +99,7 @@ import Tools from 'Tools';
 
 /**
  * 函数节流
- * @param fn        频繁触发的函数   type Function
+ * @param fn        频繁触发的函数    type Function
  * @param delay     延迟            type Number
  * @param limit     必触发时间限制   type Number
  */
@@ -136,6 +136,33 @@ import Tools from 'Tools';
  * @param replacer  重构对象的回调函数
  * @returns {{_$}}  解除循环引用的占位对象
  */
-Tools.fixReference({key: 'your object'}, callback);
+let a = {};
+let b = {};
+a.b = b;
+b.a = a;
+Tools.fixReference(b, callback);
+
+```
+
+### cloneDeep
+> 深拷贝
+```javascript
+import Tools from 'Tools';
+
+/**
+ * 深拷贝
+ * @param obj           被拷贝对象
+ * @param fixReference  是否考虑循环引用
+ * @returns {*}
+ */
+// 普通对象深拷贝
+let obj = {a: 3, b: [1, 2, 3]}
+Tools.cloneDeep(obj);
+// 考虑循环引用的深拷贝
+let a = {};
+let b = {};
+a.b = b;
+b.a = a;
+Tools.cloneDeep(b, true);
 
 ```

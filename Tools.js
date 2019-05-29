@@ -1,6 +1,6 @@
 const Tools = {
     // 异步函数的串行、并行、及类似Promise.all()的封装 暂未加入容错处理
-    queue: () => {
+    queue() {
         const list = []; // 队列
         let index = 0;   // 索引
         let task = 0;
@@ -68,7 +68,7 @@ const Tools = {
     },
 
     // 遍历一颗标准Tree结构
-    mapTree: (tree, action) => {
+    mapTree(tree, action) {
         if (!tree || !tree.children) {
             return false
         }
@@ -79,10 +79,12 @@ const Tools = {
     },
 
     // 数组扁平化
-    flatten: (arr) => String(arr).split(',').map(item => Number(item)),
+    flatten(arr) {
+        return String(arr).split(',').map(item => Number(item))
+    },
 
     // 一维数组转二维数组
-    group: (array, subGroupLength, index = 0, newArray = []) => {
+    group(array, subGroupLength, index = 0, newArray = []) {
         while (index < array.length) {
             newArray.push(array.slice(index, index += subGroupLength));
         }
@@ -90,7 +92,7 @@ const Tools = {
     },
 
     // 数组转迭代器对象
-    iterator: (arr) => {
+    iterator(arr) {
         let index = 0;
         return {
             next: function () {
@@ -101,11 +103,11 @@ const Tools = {
 
     /**
      * 函数节流
-     * @param fn        频繁触发的函数   type Function
+     * @param fn        频繁触发的函数    type Function
      * @param delay     延迟            type Number
      * @param limit     必触发时间限制   type Number
      */
-    throttle: (fn, delay = 300, limit = 1000) => {
+    throttle(fn, delay = 300, limit = 1000) {
         let timer = null;
         let previous = null;
         let result;
@@ -138,7 +140,7 @@ const Tools = {
      * @param   delay     延迟           type Number
      * @param   immediate 是否立即触发一次 type Boolean
      */
-    debounce: (fn, delay = 300, immediate = false) => {
+    debounce(fn, delay = 300, immediate = false) {
         let timer = null;
         let now = true;
         let result;
@@ -165,13 +167,14 @@ const Tools = {
             return result
         };
     },
+
     /**
      * 解除循环引用
      * @param object    循环引用对象
      * @param replacer  重构对象的回调函数
      * @returns {{_$}}  解除循环引用的占位对象
      */
-    fixReference: (object, replacer) => {
+    fixReference(object, replacer) {
         // 使用闭包和WeakMap对象的set、get嗅探重复的对象
         const objects = new WeakMap();
         // 传入需解除引用的对象和默认的终止引用占位
@@ -229,6 +232,30 @@ const Tools = {
         };
 
         return terminate(object, 'stop')
+    },
+
+    /**
+     * 深拷贝
+     * @param obj           被拷贝对象
+     * @param fixReference  是否考虑循环引用
+     * @returns {*}
+     */
+    cloneDeep(obj, fixReference) {
+        let _obj = obj;
+        if (fixReference) {
+            _obj = this.fixReference(obj);
+        }
+        const cloneBase = (_obj) => {
+            if (typeof _obj !== 'object') return;
+            let newObj = _obj instanceof Array ? [] : {};
+            for (let key in _obj) {
+                if (_obj.hasOwnProperty(key)) {
+                    newObj[key] = typeof _obj[key] === 'object' ? cloneBase(_obj[key]) : _obj[key];
+                }
+            }
+            return newObj;
+        };
+        return cloneBase(_obj)
     }
 };
 
