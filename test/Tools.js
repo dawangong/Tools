@@ -255,6 +255,21 @@ const Tools = {
             return newObj;
         };
         return cloneBase(_obj)
+    },
+    // 函数记忆
+    memorize(cb) {
+      const cache = new Map();
+      const search = () => {
+        const key = JSON.stringify(arguments);
+        if (cache.has(key)) {
+          return cache.get(key)
+        } else {
+          const result = cb();
+          cache.set(key, result);
+          return result;
+        }
+      };
+      return search();
     }
 };
 

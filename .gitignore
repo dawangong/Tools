@@ -1,0 +1,8 @@
+.git
+dist/
+package-lock.json
+.idea/
+
+# Editor directories and files
+.idea
+*.DS_Store

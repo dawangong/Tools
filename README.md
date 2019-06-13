@@ -166,3 +166,14 @@ b.a = a;
 Tools.cloneDeep(b, true);
 
 ```
+
+### memorize
+> 函数记忆
+```javascript
+import Tools from 'Tools';
+
+// 函数记忆
+const add = (a, b) => a + b
+const memorizeAdd = Tools.memorize(add);
+memorizeAdd(1, 2)
+```
