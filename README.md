@@ -177,3 +177,34 @@ const add = (a, b) => a + b
 const memorizeAdd = Tools.memorize(add);
 memorizeAdd(1, 2)
 ```
+
+### eventManage
+> 事件管理
+```javascript
+import Tools from 'Tools';
+
+// 示例配置
+const config = {
+  'a': {
+    handle: ({ a }) => {
+      console.log(a)
+    },
+    params: {},
+    // 禁用当前函数执行
+    disable: true
+  },
+  'b': {
+    handle: ({ b }) => {
+      console.log(b)
+    },
+    params: {}
+  }
+}
+const manage = Tools.eventManage
+// 注册所有事件
+manage.registered(config)
+// 并行发布事件
+manage.allBroadcast(config)
+// 串行发布事件
+manage.queueBroadcast(config)
+```
