@@ -259,17 +259,16 @@ const Tools = {
   // 函数记忆
   memorize(cb) {
     const cache = new Map();
-    const search = () => {
+    return function () {
       const key = JSON.stringify(arguments);
       if (cache.has(key)) {
         return cache.get(key)
       } else {
-        const result = cb();
+        const result = cb(arguments);
         cache.set(key, result);
         return result;
       }
     };
-    return search();
   },
   // 事件管理机制
   eventManage: {
@@ -316,10 +315,12 @@ const Tools = {
       for (let name in eventList) {
         if (eventList.hasOwnProperty(name)) {
           const { params, disable } = eventList[name];
-          !disable && result.push({ name: this.broadcast({
+          !disable && result.push({
+            name: this.broadcast({
               name,
               params
-            }) })
+            })
+          })
         }
       }
       return result
