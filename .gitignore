@@ -1,5 +1,4 @@
 .git
-dist/
 package-lock.json
 .idea/
 
