@@ -1,3 +1,2 @@
-const Tools = require('../dist/Tools.min');
-
-console.log(Tools.isEqual({}, {}));
+// const tools = require('../dist/tools.min');
+console.log(tools.isEqual({}, {}));

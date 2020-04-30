@@ -1,4 +1,4 @@
-# Tools
+# tools
 工具箱,对常用功能的封装实现
 
 > DOC
@@ -7,6 +7,14 @@
 
 ```npm
 npm install highly-tools
+```
+
+## 使用支持
+- CommonJS
+- ES6 module
+```javascript
+import tools from 'highly-tools'
+const { tools } = require('highly-tools');
 ```
 
 ## Api
@@ -35,7 +43,7 @@ npm install highly-tools
 ```javascript
 // 需要对异步函数做一些修改(包一层即可) 如下:
 //（略显鸡肋 曾尝试过装饰器模式自行内部封装fail...）
-import Tools from 'Tools';
+import tools from 'highly-tools';
 
 const fn1 = (cb) => {
     setTimeout(() => {
@@ -60,7 +68,7 @@ const fn3 = (cb) => {
 
 asyncQueue = [fn1, fn2, fn3];
 
-const q = Tools.queue();
+const q = tools.queue();
 q.add(...asyncQueue);
 
 // 串行
@@ -78,45 +86,45 @@ q.runAll().then(() => {
 ### mapTree
 > tree的遍历
 ```javascript
-import Tools from 'Tools';
+import tools from 'highly-tools';
 
 let tree = {
      value: 0,
      children: []
  };
 
-Tools.mapTree(tree, console.log);
+tools.mapTree(tree, console.log);
 ```
 
 ### flatten
 > 数组扁平化
 ```javascript
-import Tools from 'Tools';
+import tools from 'highly-tools';
 
 let arr = [1, 2, [1, 3, 4, 5, [3, 4], 5, 7], 668];
-Tools.flatten(arr);
+tools.flatten(arr);
 ```
 
 ### group
 > 一维数组转多维数组
 ```javascript
-import Tools from 'Tools';
+import tools from 'highly-tools';
 
-arr = Tools.group([1, 2, 3, 4, 5], 2);
+arr = tools.group([1, 2, 3, 4, 5], 2);
 ```
 
 ### iterator
 > 数组转迭代器对象
 ```javascript
-import Tools from 'Tools';
+import tools from 'highly-tools';
 
-Tools.iterator([1, 2, 3]);
+tools.iterator([1, 2, 3]);
 ```
 
 ### throttle
 > 函数节流，控制执行频率
 ```javascript
-import Tools from 'Tools';
+import tools from 'highly-tools';
 
 /**
  * 函数节流
@@ -124,7 +132,7 @@ import Tools from 'Tools';
  * @param delay     延迟            type Number
  * @param limit     必触发时间限制   type Number
  */
-Tools.throttle(() => {
+tools.throttle(() => {
     // your fn
 }, 300);
 ```
@@ -132,7 +140,7 @@ Tools.throttle(() => {
 ### debounce
 > 函数防抖，频繁触发只触发一次
 ```javascript
-import Tools from 'Tools';
+import tools from 'highly-tools';
 
 /**
  * 函数防抖
@@ -140,7 +148,7 @@ import Tools from 'Tools';
  * @param   delay     延迟           type Number
  * @param   immediate 是否立即触发一次 type Boolean
  */
-Tools.debounce(() => {
+tools.debounce(() => {
     // your fn
 }, 300);
 
@@ -149,7 +157,7 @@ Tools.debounce(() => {
 ### fixReference
 > 循环引用解除
 ```javascript
-import Tools from 'Tools';
+import tools from 'highly-tools';
 
 /**
  * 解除循环引用
@@ -161,14 +169,14 @@ let a = {};
 let b = {};
 a.b = b;
 b.a = a;
-Tools.fixReference(b, callback);
+tools.fixReference(b, callback);
 
 ```
 
 ### cloneDeep
 > 深拷贝
 ```javascript
-import Tools from 'Tools';
+import tools from 'highly-tools';
 
 /**
  * 深拷贝
@@ -178,24 +186,24 @@ import Tools from 'Tools';
  */
 // 普通对象深拷贝
 let obj = {a: 3, b: [1, 2, 3]}
-Tools.cloneDeep(obj);
+tools.cloneDeep(obj);
 // 考虑循环引用的深拷贝
 let a = {};
 let b = {};
 a.b = b;
 b.a = a;
-Tools.cloneDeep(b, true);
+tools.cloneDeep(b, true);
 
 ```
 
 ### memorize
 > 函数记忆
 ```javascript
-import Tools from 'Tools';
+import tools from 'highly-tools';
 
 // 函数记忆
 const add = (a, b) => a + b
-const memorizeAdd = Tools.memorize(add);
+const memorizeAdd = tools.memorize(add);
 memorizeAdd(1, 2)
 ```
 ```
