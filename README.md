@@ -1,49 +1,44 @@
-# tools
+# tools ![release](http://img.shields.io/github/v/release/dawangong/Tools.svg) ![MIT](https://img.shields.io/github/license/dawangong/Tools.svg)
 工具箱,对常用功能的封装实现
-
 > DOC
-
-## How to use ?
-
+### How to use ?
 ```npm
-npm install highly-tools
+npm i highly-tools
 ```
-
-## 使用支持
+### 使用支持
 - CommonJS
 - ES6 module
 ```javascript
 import tools from 'highly-tools'
 const { tools } = require('highly-tools');
 ```
-
-## Api
+### Api
 - queue
-- resetTree
-- getArrMax
-- getArrMaxIndex
-- isEmpty
+- group
 - mapTree
 - flatten
-- group
 - iterator
 - throttle
 - debounce
-- calcTime
-- isEqual
-- toDate
-- split
-- fixReference
-- simpleClone
-- cloneDeep
 - memorize
+- cloneDeep
+> waiting for doc...(It's been supported)
+- split
+- toDate
+- isEqual
+- isEmpty
+- calcTime
+- resetTree
+- getArrMax
+- simpleClone
+- fixReference
+- getArrMaxIndex
 
-### queue
+#### queue
 > 串行、并行、全部完成
 ```javascript
-// 需要对异步函数做一些修改(包一层即可) 如下:
-//（略显鸡肋 曾尝试过装饰器模式自行内部封装fail...）
-import tools from 'highly-tools';
+// 需要对异步函数做一些修改(包一层即可,略显鸡肋...) 如下:
+import { queue } from 'highly-tools';
 
 const fn1 = (cb) => {
     setTimeout(() => {
@@ -68,7 +63,7 @@ const fn3 = (cb) => {
 
 asyncQueue = [fn1, fn2, fn3];
 
-const q = tools.queue();
+const q = queue();
 q.add(...asyncQueue);
 
 // 串行
@@ -83,48 +78,48 @@ q.runAll().then(() => {
 });
 ```
 
-### mapTree
+#### mapTree
 > tree的遍历
 ```javascript
-import tools from 'highly-tools';
+import { mapTree } from 'highly-tools';
 
 let tree = {
      value: 0,
      children: []
  };
 
-tools.mapTree(tree, console.log);
+mapTree(tree, console.log);
 ```
 
-### flatten
+#### flatten
 > 数组扁平化
 ```javascript
-import tools from 'highly-tools';
+import { flatten } from 'highly-tools';
 
 let arr = [1, 2, [1, 3, 4, 5, [3, 4], 5, 7], 668];
-tools.flatten(arr);
+flatten(arr);
 ```
 
-### group
+#### group
 > 一维数组转多维数组
 ```javascript
-import tools from 'highly-tools';
+import { group } from 'highly-tools';
 
-arr = tools.group([1, 2, 3, 4, 5], 2);
+arr = group([1, 2, 3, 4, 5], 2);
 ```
 
-### iterator
+#### iterator
 > 数组转迭代器对象
 ```javascript
-import tools from 'highly-tools';
+import { iterator } from 'highly-tools';
 
-tools.iterator([1, 2, 3]);
+iterator([1, 2, 3]);
 ```
 
-### throttle
+#### throttle
 > 函数节流，控制执行频率
 ```javascript
-import tools from 'highly-tools';
+import { throttle } from 'highly-tools';
 
 /**
  * 函数节流
@@ -132,15 +127,15 @@ import tools from 'highly-tools';
  * @param delay     延迟            type Number
  * @param limit     必触发时间限制   type Number
  */
-tools.throttle(() => {
+throttle(() => {
     // your fn
 }, 300);
 ```
 
-### debounce
+#### debounce
 > 函数防抖，频繁触发只触发一次
 ```javascript
-import tools from 'highly-tools';
+import { debounce } from 'highly-tools';
 
 /**
  * 函数防抖
@@ -148,16 +143,16 @@ import tools from 'highly-tools';
  * @param   delay     延迟           type Number
  * @param   immediate 是否立即触发一次 type Boolean
  */
-tools.debounce(() => {
+debounce(() => {
     // your fn
 }, 300);
 
 ```
 
-### fixReference
+#### fixReference
 > 循环引用解除
 ```javascript
-import tools from 'highly-tools';
+import { fixReference } from 'highly-tools';
 
 /**
  * 解除循环引用
@@ -169,14 +164,14 @@ let a = {};
 let b = {};
 a.b = b;
 b.a = a;
-tools.fixReference(b, callback);
+fixReference(b, callback);
 
 ```
 
-### cloneDeep
+#### cloneDeep
 > 深拷贝
 ```javascript
-import tools from 'highly-tools';
+import { cloneDeep } from 'highly-tools';
 
 /**
  * 深拷贝
@@ -186,24 +181,25 @@ import tools from 'highly-tools';
  */
 // 普通对象深拷贝
 let obj = {a: 3, b: [1, 2, 3]}
-tools.cloneDeep(obj);
+cloneDeep(obj);
 // 考虑循环引用的深拷贝
 let a = {};
 let b = {};
 a.b = b;
 b.a = a;
-tools.cloneDeep(b, true);
+cloneDeep(b, true);
 
 ```
 
-### memorize
+#### memorize
 > 函数记忆
 ```javascript
-import tools from 'highly-tools';
+import { memorize } from 'highly-tools';
 
 // 函数记忆
 const add = (a, b) => a + b
-const memorizeAdd = tools.memorize(add);
+const memorizeAdd = memorize(add);
 memorizeAdd(1, 2)
 ```
-```
+### License
+wx-event is [MIT licensed](https://github.com/dawangong/Tools/blob/master/LICENSE).
