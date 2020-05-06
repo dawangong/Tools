@@ -202,4 +202,4 @@ const memorizeAdd = memorize(add);
 memorizeAdd(1, 2)
 ```
 ### License
-wx-event is [MIT licensed](https://github.com/dawangong/Tools/blob/master/LICENSE).
+highly-tools is [MIT licensed](https://github.com/dawangong/Tools/blob/master/LICENSE).
