@@ -23,16 +23,20 @@ const { tools } = require('highly-tools');
 - memorize
 - cloneDeep
 > waiting for doc...(It's been supported)
+- curry
 - split
 - toDate
+- compose
 - isEqual
 - isEmpty
 - calcTime
 - resetTree
 - getArrMax
+- findParent
 - simpleClone
 - fixReference
 - getArrMaxIndex
+- asyncErrorCatch
 
 #### queue
 > 串行、并行、全部完成

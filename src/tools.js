@@ -385,6 +385,52 @@ const memorize = cb => {
   };
 };
 
+/**
+ * 查找tree所有父级
+ * @param {*} _item 当前项
+ * @param {*} treeArr tree数据
+ * @param {*} fn 页面回调函数
+ */
+const findParent = (_item, treeArr, fn) => {
+  treeArr.forEach(tree => {
+      mapTree(tree, item => {
+        if (_item.pid === item.id) {
+          fn(item);
+          item.pid && findParent(item, treeArr, fn)
+        }
+      })
+    }
+  )
+};
+
+// 柯里化
+const curry = fn => {
+  const check = (rest, argList) => rest === 0 ? fn(...argList) : arg => check(rest - 1, [...argList, arg]);
+  return check(fn.length, []);
+};
+
+// 函数组合
+const compose = (...fns) => (...args) =>
+  fns.reduce(
+    (params, fn, index) => (index === 0 ? fn(...params) : fn(params)),
+    args
+  );
+
+/**
+ * 异步函数包裹
+ * 解决async/await 包裹
+ * @param asyncFn
+ * @returns {Promise<*[]>}
+ */
+const asyncErrorCatch = async asyncFn => {
+  try {
+    const res = asyncFn();
+    return [res, null];
+  } catch (e) {
+    return [null, e];
+  }
+};
+
 export {
   queue,
   resetTree,
@@ -404,5 +450,9 @@ export {
   fixReference,
   simpleClone,
   cloneDeep,
-  memorize
+  memorize,
+  findParent,
+  curry,
+  compose,
+  asyncErrorCatch
 }

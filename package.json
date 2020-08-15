@@ -1,6 +1,6 @@
 {
   "name": "highly-tools",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "工具箱,对常用功能的封装实现",
   "main": "./dist/tools.min.js",
   "scripts": {
