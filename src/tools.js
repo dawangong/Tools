@@ -215,7 +215,7 @@ const isEqual = (obj, other) => JSON.stringify(obj) === JSON.stringify(other);
  * @returns {{nowTime: string, nowYear: number, nowMonth: number, nowDate: number, nowHour: number, nowMinutes: number, nowSeconds: number, nowDayOfWeek: number}}
  */
 const toDate = (time, format) => {
-  if (time.toString().length < 13) {
+  if (String(time).length < 13) {
     time = parseInt(time) * 1000
   }
   let t = new Date(time);
