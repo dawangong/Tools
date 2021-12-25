@@ -378,7 +378,7 @@ const memorize = cb => {
     if (cache.has(key)) {
       return cache.get(key)
     } else {
-      const result = cb(arguments);
+      const result = cb(...arguments);
       cache.set(key, result);
       return result;
     }
