@@ -1,5 +1,5 @@
 // 异步函数的串行、并行、及类似Promise.all()的封装 暂未加入容错处理
-const queue = () => {
+export const queue = () => {
   const list = []; // 队列
   let index = 0;   // 索引
   let task = 0;
@@ -66,7 +66,7 @@ const queue = () => {
   }
 };
 // tree原始数据转标准tree
-const resetTree = originData => {
+export const resetTree = originData => {
   if (!originData || originData.length === 0) return;
 
   for (let i = 0; i < originData.length; i++) {
@@ -86,27 +86,27 @@ const resetTree = originData => {
  * @param type
  * @returns {number}
  */
-const getArrMax = (arr, type = 'max') => type === 'max' ? Math.max(...arr) : Math.min(...arr);
+export const getArrMax = (arr, type = 'max') => type === 'max' ? Math.max(...arr) : Math.min(...arr);
 /**
  * 获取数组中极值项索引
  * @param arr
  * @param type
  * @returns {*}
  */
-const getArrMaxIndex = (arr, type = 'max') => arr.indexOf(getArrMax(arr, type));
+export const getArrMaxIndex = (arr, type = 'max') => arr.indexOf(getArrMax(arr, type));
 /**
  * 判断对象是否为空
  * @param obj
  * @returns {boolean} 不是对象返回都是false
  */
-const isEmpty = obj => typeof obj === 'object' && obj !== null && Object.keys(obj).length === 0;
+export const isEmpty = obj => typeof obj === 'object' && obj !== null && Object.keys(obj).length === 0;
 /**
  * 遍历一颗标准Tree结构
  * @param tree
  * @param action
  * @returns {boolean}
  */
-const mapTree = (tree, action) => {
+export const mapTree = (tree, action) => {
   if (!tree || !tree.children) {
     return false
   }
@@ -114,21 +114,21 @@ const mapTree = (tree, action) => {
   tree.children.forEach(item => this.mapTree(item, action));
 };
 // 数组扁平化
-const flatten = arr => {
+export const flatten = arr => {
   while (arr.some(item => Array.isArray(item))) {
     arr = [].concat(...arr);
   }
   return arr;
 };
 // 一维数组转二维数组
-const group = (array, subGroupLength, index = 0, newArray = []) => {
+export const group = (array, subGroupLength, index = 0, newArray = []) => {
   while (index < array.length) {
     newArray.push(array.slice(index, index += subGroupLength));
   }
   return newArray;
 };
 // 数组转迭代器对象
-const iterator = arr => {
+export const iterator = arr => {
   let index = 0;
   return {
     next: () => index < arr.length ? { value: arr[index++], done: false } : { value: undefined, done: true }
@@ -139,7 +139,7 @@ const iterator = arr => {
  * @param fn        频繁触发的函数    type Function
  * @param limit     必触发时间限制   type Number
  */
-const throttle = (fn, limit = 1000) => {
+export const throttle = (fn, limit = 1000) => {
   let previous = null;
   let result;
 
@@ -160,7 +160,7 @@ const throttle = (fn, limit = 1000) => {
  * @param   delay     延迟           type Number
  * @param   immediate 是否立即触发一次 type Boolean
  */
-const debounce = (fn, delay = 300, immediate = false) => {
+export const debounce = (fn, delay = 300, immediate = false) => {
   let timer = null;
   let now = true;
   let result;
@@ -191,7 +191,7 @@ const debounce = (fn, delay = 300, immediate = false) => {
  * @param fn 原函数
  * @returns {Function}
  */
-const calcTime = fn => {
+export const calcTime = fn => {
   return function () {
     console.time();
     fn.apply(this, arguments);
@@ -206,7 +206,7 @@ const calcTime = fn => {
  * @param other
  * @returns {boolean}
  */
-const isEqual = (obj, other) => JSON.stringify(obj) === JSON.stringify(other);
+export const isEqual = (obj, other) => JSON.stringify(obj) === JSON.stringify(other);
 
 /**
  * 日期转化
@@ -214,7 +214,7 @@ const isEqual = (obj, other) => JSON.stringify(obj) === JSON.stringify(other);
  * @param format
  * @returns {{nowTime: string, nowYear: number, nowMonth: number, nowDate: number, nowHour: number, nowMinutes: number, nowSeconds: number, nowDayOfWeek: number}}
  */
-const toDate = (time, format) => {
+export const toDate = (time, format) => {
   if (String(time).length < 13) {
     time = parseInt(time) * 1000
   }
@@ -274,7 +274,7 @@ const toDate = (time, format) => {
  * @param fh  分隔符号
  * @returns {string}
  */
-const split = (num, fh = ' ') => {
+export const split = (num, fh = ' ') => {
   const base = `$1${fh}`;
   const source = String(num).split('.'); // 按小数点分成2部分
   source[0] = source[0].replace(new RegExp(`(\\d)(?=(\\d{3})+$)`, 'ig'), base); // 只将整数部分进行都好分割
@@ -286,7 +286,7 @@ const split = (num, fh = ' ') => {
  * @param replacer  重构对象的回调函数
  * @returns {{_$}}  解除循环引用的占位对象
  */
-const fixReference = (object, replacer) => {
+export const fixReference = (object, replacer) => {
   // 使用闭包和WeakMap对象的set、get嗅探重复的对象
   const objects = new WeakMap();
   // 传入需解除引用的对象和默认的终止引用占位
@@ -346,14 +346,14 @@ const fixReference = (object, replacer) => {
   return terminate(object, 'stop')
 };
 // 简单深拷贝
-const simpleClone = obj => JSON.parse(JSON.stringify(obj));
+export const simpleClone = obj => JSON.parse(JSON.stringify(obj));
 /**
  * 深拷贝
  * @param obj           被拷贝对象
  * @param fixReference  是否考虑循环引用
  * @returns {*}
  */
-const cloneDeep = (obj, fixReference) => {
+export const cloneDeep = (obj, fixReference) => {
   let _obj = obj;
   if (fixReference) {
     _obj = this.fixReference(obj);
@@ -371,7 +371,7 @@ const cloneDeep = (obj, fixReference) => {
   return cloneBase(_obj)
 };
 // 函数记忆
-const memorize = cb => {
+export const memorize = cb => {
   const cache = new Map();
   return function () {
     const key = JSON.stringify(arguments);
@@ -391,7 +391,7 @@ const memorize = cb => {
  * @param {*} treeArr tree数据
  * @param {*} fn 页面回调函数
  */
-const findParent = (_item, treeArr, fn) => {
+export const findParent = (_item, treeArr, fn) => {
   treeArr.forEach(tree => {
       mapTree(tree, item => {
         if (_item.pid === item.id) {
@@ -404,13 +404,13 @@ const findParent = (_item, treeArr, fn) => {
 };
 
 // 柯里化
-const curry = fn => {
+export const curry = fn => {
   const check = (rest, argList) => rest === 0 ? fn(...argList) : arg => check(rest - 1, [...argList, arg]);
   return check(fn.length, []);
 };
 
 // 函数组合
-const compose = (...fns) => (...args) =>
+export const compose = (...fns) => (...args) =>
   fns.reduce(
     (params, fn, index) => (index === 0 ? fn(...params) : fn(params)),
     args
@@ -422,7 +422,7 @@ const compose = (...fns) => (...args) =>
  * @param asyncFn
  * @returns {Promise<*[]>}
  */
-const asyncErrorCatch = async asyncFn => {
+export const asyncErrorCatch = async asyncFn => {
   try {
     const res = asyncFn();
     return [res, null];
@@ -431,28 +431,55 @@ const asyncErrorCatch = async asyncFn => {
   }
 };
 
-export {
-  queue,
-  resetTree,
-  getArrMax,
-  getArrMaxIndex,
-  isEmpty,
-  mapTree,
-  flatten,
-  group,
-  iterator,
-  throttle,
-  debounce,
-  calcTime,
-  isEqual,
-  toDate,
-  split,
-  fixReference,
-  simpleClone,
-  cloneDeep,
-  memorize,
-  findParent,
-  curry,
-  compose,
-  asyncErrorCatch
-}
+// 获取选中的文本
+export const getSelectedText = () => window.getSelection().toString()
+
+// 打乱数组
+export const shuffleArray = array => array.sort(() => Math.random() - 0.5);
+
+// 数组平均值
+export const getAverage = (...args) => args.reduce((a, b) => a + b, 0) / args.length;
+
+// 反转字符串
+export const reverseStr = str => str.split('').reverse().join('');
+
+// 首字母大写
+export const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);
+
+// 随机生成指定长度字符串
+export const generateRandomString = length => [...Array(length)].map(() => Math.random().toString(36)[2]).join('');
+
+// 随机整数
+// [0, 1}
+export const random = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
+
+// 随机ip
+export const generateRandomIP = () => Array.from({length: 4}, () => Math.floor(Math.random() * 256)).join('.');
+
+// tab是否活动
+export const checkTabInView = () => !document.hidden;
+
+// 随机布尔
+export const randomBoolean = () => Math.random() >= 0.5;
+
+// 多数组交集
+export const intersection = (a, ...arr) => [...new Set(a)].filter((v) => arr.every((b) => b.includes(v)));
+
+// 找出最接近的值
+export const nearest = (arr, n) => arr.reduce((prev, curr) => (Math.abs(curr - n) < Math.abs(prev - n) ? curr : prev));
+
+// 矩阵行列交换
+export const transpose = (matrix) => matrix[0].map((col, i) => matrix.map((row) => row[i]));
+// transpose(
+//   [              // [
+//       [1, 2, 3], //      [1, 4, 7],
+//       [4, 5, 6], //      [2, 5, 8],
+//       [7, 8, 9], //      [3, 6, 9],
+//    ]             //  ]
+// );
+
+// 标签剥离
+export const stripHtml = (html) => new DOMParser().parseFromString(html, 'text/html').body.textContent || '';
+
+// 等待
+export const sleep = async t => new Promise((resolve) => setTimeout(resolve, t));
